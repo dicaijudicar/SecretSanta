@@ -45,7 +45,7 @@ for email in emails:
     print(email)
     print(dfred.iloc[0]['SecretSanta'])
 '''
-
+ParentsWhoShareEmail='NameOfParents'
 #loop over emails
 for name in L:     
     dfred=final[final.Name==name]
@@ -54,7 +54,8 @@ for name in L:
     from email.mime.text import MIMEText
     
     name=dfred.iloc[0]['Name'];secretsanta=dfred.iloc[0]['SecretSanta']
-    message = f"Hello {name}. I hope you've had a swell day. Mostly, I am making a long message so Papa and Carole can't read eachother's people. You are the Secret Santa for {secretsanta}."
+    
+    message = f"Hello {name}. I hope you've had a swell day. Mostly, I am making a long message so {ParentsWhoShareEmail} can't read eachother's people. You are the Secret Santa for {secretsanta}."
     msg = MIMEMultipart()
     password = "password" #insert password here 
     msg['From'] = "juliendicaire@gmail.com" #feel free to contact me with any questions
