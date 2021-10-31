@@ -1,8 +1,4 @@
 
-# =============================================================================
-# This is an alteration of a file I made last year to 
-# email the secret santa of my family members anonymously
-# =============================================================================
 
 import random
 import pandas as pd
@@ -14,7 +10,7 @@ import numpy as np
 
         
 
-df2=pd.read_excel("E:\\Programs\\Python\\emails.xlsx")
+df2=pd.read_excel("E:\\Programs\\Python\\emails.xlsx", engine='openpyxl')
 
 
 list_ind=list(df2['Name'].unique())
@@ -34,12 +30,18 @@ def shuffleAttach(df):
 
 twoTruth=True
 oneTruth=True
-while oneTruth==True or twoTruth==True:
+threeTruth=False
+while ((oneTruth==True) or (twoTruth==True) or (threeTruth==True)):
     df2=shuffleAttach(df2)
     df2['testFilter1']=np.where(df2.Name==df2.SecretSanta,1,0)
     oneTruth= True if df2['testFilter1'].sum() > 0 else False
     df2['testFilter2']=np.where(df2.last_year==df2.SecretSanta,1,0)
     twoTruth= True if df2['testFilter2'].sum()>0 else False
+    df2['testFilter3']=np.where((df2.SecretSanta.isin(['Rene','Carole']) & (df2.Name.isin(['Rene','Carole']))),1,0)
+    threeTruth= True if df2['testFilter3'].sum()>0 else False
+    
+    
+
 
 
 #loop over emails
@@ -50,9 +52,9 @@ for name in df2['Name'].unique():
     
     secretsanta=df2[df2.Name==name].iloc[0]['SecretSanta']
     
-    message = f"Hello {name}. I wish you a good day during these Covid times. Are you ready for this? *Cue music* You are the Secret Santa for {secretsanta}."
+    message = f"Hello {name}. I wish you a good day during these Covid times. Are you ready for this? *Cue music* You are the Secret Santa for {secretsanta}. Reminder: Our budget is $50!"
     msg = MIMEMultipart()
-    password = pd.read_excel(r"password").iloc[0,0]
+    password = ''
     msg['From'] = "juliendicaire@gmail.com"
     msg['To'] = df2[df2.Name==name].iloc[0]['Email']  
     msg['Subject'] = f"This message is for {name}. If you are not {name}, please disregard! Your Secret Santa Person awaits you!"
@@ -63,7 +65,7 @@ for name in df2['Name'].unique():
     server.sendmail(msg['From'], msg['To'], msg.as_string())
     server.quit()
     
-    
+
     
 #export to excel the details 
 df2.to_excel("E:\\Programs\\Python\\emails.xlsx", index=False)
