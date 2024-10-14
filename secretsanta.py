@@ -54,7 +54,7 @@ for name in df2['Name'].unique():
     
     message = f"Hello {name}. Are you ready for this? *Cue music* You are the Secret Santa for {secretsanta}. Reminder: Our budget is $50!"
     msg = MIMEMultipart()
-    password = 'dhxnmystbttvzfgz'
+    password = 'blork'
     msg['From'] = "juliendicaire@gmail.com"
     msg['To'] = df2[df2.Name==name].iloc[0]['Email']  
     msg['Subject'] = f"This message is for {name}. If you are not {name}, please disregard! Your Secret Santa Person awaits you!"
