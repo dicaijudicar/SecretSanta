@@ -10,7 +10,7 @@ import numpy as np
 
         
 
-df2=pd.read_excel("E:\\Programs\\Python\\emails.xlsx", engine='openpyxl')
+df2=pd.read_excel(r"C:\gitclone\SecretSanta\emails.xlsx", engine='openpyxl')
 
 
 list_ind=list(df2['Name'].unique())
@@ -52,9 +52,9 @@ for name in df2['Name'].unique():
     
     secretsanta=df2[df2.Name==name].iloc[0]['SecretSanta']
     
-    message = f"Hello {name}. I wish you a good day during these Covid times. Are you ready for this? *Cue music* You are the Secret Santa for {secretsanta}. Reminder: Our budget is $50!"
+    message = f"Hello {name}. Are you ready for this? *Cue music* You are the Secret Santa for {secretsanta}. Reminder: Our budget is $50!"
     msg = MIMEMultipart()
-    password = ''
+    password = 'dhxnmystbttvzfgz'
     msg['From'] = "juliendicaire@gmail.com"
     msg['To'] = df2[df2.Name==name].iloc[0]['Email']  
     msg['Subject'] = f"This message is for {name}. If you are not {name}, please disregard! Your Secret Santa Person awaits you!"
@@ -68,4 +68,4 @@ for name in df2['Name'].unique():
 
     
 #export to excel the details 
-df2.to_excel("E:\\Programs\\Python\\emails.xlsx", index=False)
+df2.to_excel(r"C:\gitclone\SecretSanta\emails.xlsx", index=False)
